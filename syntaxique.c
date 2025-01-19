@@ -64,6 +64,7 @@ static void parseArguments(int indexProcFunc);
 // ---------------------------------------------------------------------
 void Program()
 {
+    // PROGRAM ::= program ID ; { CONST_DECL | TYPE_DECL | VAR_DECL } PROC_FUNC_PART BLOC .
     testSym(PROGRAM_TOKEN); // Doit commencer par le token "program"
     testSym(ID_TOKEN);      // Ensuite, un identifiant (le nom du programme)
     testSym(PV_TOKEN);      // Puis un point-virgule
@@ -77,15 +78,15 @@ void Program()
         {
         case CONST_TOKEN:
             testSym(CONST_TOKEN);
-            ConstDecl(); // Déclaration des constantes
+            ConstDecl(); // CONST_DECL ::= const CONST_ITEM { CONST_ITEM }
             break;
         case TYPE_TOKEN:
             testSym(TYPE_TOKEN);
-            TypeDecl();  // Déclaration des types
+            TypeDecl();  // TYPE_DECL ::= type TYPE_ITEM { TYPE_ITEM }
             break;
         case VAR_TOKEN:
             testSym(VAR_TOKEN);
-            VarDecl();   // Déclaration des variables
+            VarDecl();   // VAR_DECL ::= var VAR_ITEM { VAR_ITEM }
             break;
         default:
             break;
@@ -97,14 +98,14 @@ void Program()
     int jumpOverProcsIndex = PC; // Sauvegarde de l'adresse du saut
 
     // Génère le code pour les procédures et fonctions
-    ProcFuncPart();
+    ProcFuncPart(); // PROC_FUNC_PART ::= { PROC_DECL | FUNC_DECL }
 
     // Fixe la cible du saut pour pointer après le code des proc/fonctions
     int afterProcs = PC + 1;
     PCODE[jumpOverProcsIndex].SUITE = afterProcs;
 
     // Analyse le bloc principal du programme
-    Bloc();
+    Bloc(); // BLOC ::= { CONST_DECL | TYPE_DECL | VAR_DECL } begin INSTS end
     testSym(PT_TOKEN); // Doit terminer par un point
     Ecrire1(HLT);     // Génère l'instruction d'arrêt (halt)
 }
@@ -114,6 +115,7 @@ void Program()
 // ---------------------------------------------------------------------
 void Bloc()
 {
+    // BLOC ::= { CONST_DECL | TYPE_DECL | VAR_DECL } begin INSTS end
     // Gestion des déclarations locales (const, type, var)
     while (symCour.cls == CONST_TOKEN ||
            symCour.cls == TYPE_TOKEN ||
@@ -123,15 +125,15 @@ void Bloc()
         {
         case CONST_TOKEN:
             testSym(CONST_TOKEN);
-            ConstDecl(); // Déclaration locale de constantes
+            ConstDecl(); // CONST_DECL ::= const CONST_ITEM { CONST_ITEM }
             break;
         case TYPE_TOKEN:
             testSym(TYPE_TOKEN);
-            TypeDecl();  // Déclaration locale de types
+            TypeDecl();  // TYPE_DECL ::= type TYPE_ITEM { TYPE_ITEM }
             break;
         case VAR_TOKEN:
             testSym(VAR_TOKEN);
-            VarDecl();   // Déclaration locale de variables
+            VarDecl();   // VAR_DECL ::= var VAR_ITEM { VAR_ITEM }
             break;
         default:
             break;
@@ -139,19 +141,21 @@ void Bloc()
     }
 
     testSym(BEGIN_TOKEN); // Début du bloc d'instructions (mot-clé 'begin')
-    Insts();            // Analyse la séquence d'instructions
+    Insts();            // INSTS ::= INST { ; INST }
     testSym(END_TOKEN); // Fin du bloc (mot-clé 'end')
 }
 
 // ---------------------------------------------------------------------
 // Analyse une séquence d'instructions séparées par des ';'
 // ---------------------------------------------------------------------
+// INSTS ::= INST { ; INST }
 void Insts()
 {
     Inst(); // Analyse la première instruction
     while (symCour.cls == PV_TOKEN) // Tant qu'il y a un point-virgule
     {
         testSym(PV_TOKEN); // Consomme le point-virgule
+        //A voir si on doit ajouter un test pour les instructions vides
         if (symCour.cls == END_TOKEN || symCour.cls == UNTIL_TOKEN || symCour.cls == ELSE_TOKEN)
         {
             break; // Arrête si fin du bloc ou condition d'arrêt d'une boucle/structure
@@ -165,17 +169,19 @@ void Insts()
 // ---------------------------------------------------------------------
 void Inst()
 {
+    // INST ::= CALL_OR_ASSIGN | IF_INST | WHILE_INST | REPEAT_INST | FOR_INST | CASE_INST | begin INSTS end | WRITE_INST | READ_INST
     switch (symCour.cls)
     {
     // Si c'est un identifiant, cela peut être un appel de proc/fonction ou une affectation
     case ID_TOKEN:
-        CallOrAssign();
+        CallOrAssign(); // CALL_OR_ASSIGN ::= ID [ ( ARGUMENTS ) ] | ID := EXPR
         break;
 
     case IF_TOKEN:
     {
+        // IF_INST ::= if COND then INST [ else INST ]
         testSym(IF_TOKEN); // Consomme le token "if"
-        Cond();            // Analyse la condition
+        Cond();            // COND ::= EXPR RELOP EXPR
         testSym(THEN_TOKEN); // Attend le token "then"
         int jumpIf = PC + 1; // Adresse pour le saut conditionnel
         Ecrire2(BZE, 0);     // Génère un branchement si la condition est fausse
@@ -198,9 +204,10 @@ void Inst()
 
     case WHILE_TOKEN:
     {
+        // WHILE_INST ::= while COND do INST
         testSym(WHILE_TOKEN); // Consomme le token "while"
         int condAddr = PC + 1; // Adresse du début de la condition
-        Cond();              // Analyse la condition de la boucle
+        Cond();              // COND ::= EXPR RELOP EXPR
         testSym(DO_TOKEN);   // Attend le token "do"
         int jumpOut = PC + 1; // Adresse pour sortir de la boucle
         Ecrire2(BZE, 0);     // Génère le branchement de sortie si la condition est fausse
@@ -211,15 +218,15 @@ void Inst()
     break;
 
     case REPEAT_TOKEN:
-        RepeatInst(); // Analyse l'instruction "repeat...until"
+        RepeatInst(); // REPEAT_INST ::= repeat INSTS until COND
         break;
 
     case FOR_TOKEN:
-        ForInst(); // Analyse la boucle "for"
+        ForInst(); // FOR_INST ::= for ID := EXPR ( to | downto ) EXPR do INST
         break;
 
     case CASE_TOKEN:
-        CaseInst(); // Analyse la structure "case"
+        CaseInst(); // CASE_INST ::= case EXPR of CASE_BRANCHES [ else INST ] end
         break;
 
     case BEGIN_TOKEN:
@@ -230,11 +237,12 @@ void Inst()
 
     case WRITE_TOKEN:
     {
+        // WRITE_INST ::= write ( EXPR { , EXPR } )
         testSym(WRITE_TOKEN); // Consomme "write"
         testSym(PRG_TOKEN);   // Consomme '('
         do
         {
-            Exp();        // Analyse une expression à écrire
+            Exp();        // EXPR ::= TERM { ( + | - ) TERM }
             Ecrire1(PRN); // Génère l'instruction d'impression
             if (symCour.cls == VIR_TOKEN)
                 testSym(VIR_TOKEN); // Consomme la virgule s'il y a plusieurs arguments
@@ -247,6 +255,7 @@ void Inst()
 
     case READ_TOKEN:
     {
+        // READ_INST ::= read ( ID { , ID } )
         testSym(READ_TOKEN); // Consomme "read"
         testSym(PRG_TOKEN);  // Consomme '('
         do
@@ -276,6 +285,7 @@ void Inst()
 // ---------------------------------------------------------------------
 void Cond()
 {
+    // COND ::= EXPR RELOP EXPR
     Exp(); // Analyse une expression
     TokenType t = symCour.cls; // Sauvegarde l'opérateur relationnel
     if (t == EGAL_TOKEN || t == DIFF_TOKEN ||
@@ -319,6 +329,7 @@ void Cond()
 // ---------------------------------------------------------------------
 void Exp()
 {
+    // EXPR ::= TERM { + TERM | - TERM }
     Term(); // Analyse un terme
     while (symCour.cls == PLUS_TOKEN || symCour.cls == MOINS_TOKEN)
     {
@@ -337,6 +348,7 @@ void Exp()
 // ---------------------------------------------------------------------
 void Term()
 {
+    // TERM ::= FACT { * FACT | / FACT }
     Fact(); // Analyse un facteur
     while (symCour.cls == MULTI_TOKEN || symCour.cls == DIV_TOKEN)
     {
@@ -355,6 +367,7 @@ void Term()
 // ---------------------------------------------------------------------
 void Fact()
 {
+    // FACT ::= ID [ ( ARGUMENTS ) ] | NUM | REAL | ( EXPR )
     switch (symCour.cls)
     {
     case ID_TOKEN:
@@ -485,6 +498,7 @@ void Fact()
 // ---------------------------------------------------------------------
 void RepeatInst()
 {
+    // REPEAT_INST ::= repeat INSTS until COND
     testSym(REPEAT_TOKEN); // Consomme "repeat"
     int start = PC + 1;    // Position de début du bloc répété
     Insts();             // Analyse les instructions à répéter
@@ -498,6 +512,7 @@ void RepeatInst()
 // ---------------------------------------------------------------------
 void ForInst()
 {
+    // FOR_INST ::= for ID := EXPR  (to | downto)  EXPR do INST
     testSym(FOR_TOKEN); // Consomme "for"
     if (symCour.cls != ID_TOKEN)
         Error("Identifier expected after FOR");
@@ -562,6 +577,8 @@ void ForInst()
 // ---------------------------------------------------------------------
 void CaseInst()
 {
+    // CASE_INST ::= case EXPR of CASE_BRANCHES [ else INST ] end
+    //CASE_BRANCHES ::= { NUM : INST ; } | [ else INST [;] ]  
     testSym(CASE_TOKEN); // Consomme "case"
     Exp();             // Analyse l'expression à comparer
     int tmpSlot = OFFSET++; // Alloue un emplacement temporaire
@@ -620,13 +637,14 @@ void CaseInst()
 // ---------------------------------------------------------------------
 void ProcFuncPart()
 {
+    // PROC_FUNC_PART ::= { PROC_DECL | FUNC_DECL }
     // Tant qu'on trouve "procedure" ou "function", on les traite
     while (symCour.cls == PROCEDURE_TOKEN || symCour.cls == FUNCTION_TOKEN)
     {
         if (symCour.cls == PROCEDURE_TOKEN)
-            ProcDecl(); // Déclaration d'une procédure
+            ProcDecl(); // PROC_DECL ::= procedure ID [ ( PARAM_DECL_LIST ) ] ; BLOC ;
         else
-            FuncDecl(); // Déclaration d'une fonction
+            FuncDecl(); // FUNC_DECL ::= function ID [ ( PARAM_DECL_LIST ) ] : BASE_TYPE ; BLOC ;
     }
 }
 
@@ -635,6 +653,7 @@ void ProcFuncPart()
 // ---------------------------------------------------------------------
 void ProcDecl()
 {
+    // PROC_DECL ::= procedure ID [ PARAM_DECL_LIST ] ; BLOC ;
     initLocalParams(); // Initialise les paramètres locaux
 
     testSym(PROCEDURE_TOKEN); // Consomme "procedure"
@@ -679,6 +698,7 @@ void ProcDecl()
 // ---------------------------------------------------------------------
 void FuncDecl()
 {
+    // FUNC_DECL ::= function ID [ PARAM_DECL_LIST ] : BASE_TYPE ; BLOC ;
     initLocalParams(); // Initialise les paramètres locaux
 
     testSym(FUNCTION_TOKEN); // Consomme "function"
@@ -730,6 +750,7 @@ void FuncDecl()
 // ---------------------------------------------------------------------
 void CallOrAssign()
 {
+    // CALL_OR_ASSIGN ::= ID [ ( ARGUMENTS ) ] | ID := EXPR
     char name[32];
     strcpy(name, symCour.nom); // Sauvegarde le nom de l'identifiant
     testSym(ID_TOKEN);         // Consomme l'identifiant
@@ -797,6 +818,9 @@ void CallOrAssign()
 // ---------------------------------------------------------------------
 static void parseParamList(int indexProcFunc)
 {
+    // PARAM_DECL_LIST ::= [(PARAM_GROUP { ; PARAM_GROUP })]
+    // PARAM_GROUP     ::= ID_LIST : BASE_TYPE
+    //ID_LIST         ::= ID { , ID } 
     int total = 0; // Nombre total de paramètres
     if (symCour.cls == PRG_TOKEN)
     {
@@ -839,8 +863,10 @@ static void parseParamList(int indexProcFunc)
 // ---------------------------------------------------------------------
 // Analyse la liste des arguments dans un appel de proc/fonction
 // ---------------------------------------------------------------------
+//Should handle everything as expression and not ID only (May lead to errors for (ID1 + ID2 for example)
 static void parseArguments(int indexProcFunc)
 {
+    // ARGUMENTS ::= EXPR { , EXPR }
     int nbParams = TAB_IDFS[indexProcFunc].Value; // Nombre de paramètres attendus
     int count = 0; // Compteur d'arguments fournis
 
