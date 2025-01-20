@@ -1,7 +1,7 @@
-#include "interpreteur.h"
-#include "semantique.h"
-#include "generation_pcode.h"
-#include "global.h"
+#include "./headers/interpreteur.h"
+#include "./headers/semantique.h"
+#include "./headers/generation_pcode.h"
+#include "./headers/global.h"
 
 // Mémoire globale pour stocker les valeurs
 DataValue MEM[TAILLEMEM];

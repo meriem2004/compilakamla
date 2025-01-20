@@ -1,8 +1,14 @@
 {
     "git.ignoreLimitWarning": true,
     "files.associations": {
+        "*.sqlbook": "sql",
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
         "syntaxique.h": "c",
         "analyse_lexical.h": "c",
-        "global.h": "c"
+        "global.h": "c",
+        "generation_pcode.h": "c",
+        "semantique.h": "c",
+        "interpreteur.h": "c"
     }
 }

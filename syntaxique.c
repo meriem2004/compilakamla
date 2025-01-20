@@ -1,7 +1,7 @@
-#include "syntaxique.h"
-#include "analyse_lexical.h"
-#include "semantique.h"
-#include "generation_pcode.h"
+#include "./headers/syntaxique.h"
+#include "./headers/analyse_lexical.h"
+#include "./headers/semantique.h"
+#include "./headers/generation_pcode.h"
 
 // Structure pour gérer les paramètres locaux d'une procédure/fonction
 typedef struct
