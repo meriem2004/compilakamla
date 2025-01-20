@@ -1,0 +1,10 @@
+program ProcedureNoParamTest;
+
+procedure PrintHello;
+begin
+    write("Hello");
+end;
+
+begin
+    PrintHello;
+end.

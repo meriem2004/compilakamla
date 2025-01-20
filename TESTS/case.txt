@@ -1,0 +1,12 @@
+program CaseTest;
+var
+    x: integer;
+begin
+    x := 2;
+    case x of
+        1: write("x is 1");
+        2: write("x is 2");
+        3: write("x is 3");
+        else write("x is not 1, 2, or 3");
+    end;
+end.

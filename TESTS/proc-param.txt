@@ -1,0 +1,13 @@
+program ProcedureWithParamTest;
+
+procedure PrintSum(a: integer; b: integer);
+var
+    sum: integer;
+begin
+    sum := a + b;
+    write(sum);
+end;
+
+begin
+    PrintSum(3, 4);
+end.

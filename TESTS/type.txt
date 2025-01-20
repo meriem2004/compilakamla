@@ -1,0 +1,9 @@
+program TypeDefTest;
+type
+    MyInt = integer;
+var
+    x: MyInt;
+begin
+    x := 42;
+    write(x);
+end.

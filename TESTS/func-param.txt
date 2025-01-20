@@ -1,0 +1,13 @@
+program FunctionWithParamTest;
+var
+    result: integer;
+
+function Add(a: integer; b: integer): integer;
+begin
+    Add := a + b;
+end;
+
+begin
+    result := Add(3, 4);
+    write(result);
+end.

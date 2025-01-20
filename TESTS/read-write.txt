@@ -1,0 +1,7 @@
+program ReadWriteTest;
+var
+    x: integer;
+begin
+    read(x);
+    write(x);
+end.
