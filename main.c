@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     }
 
     // Exécution du P-code à l'aide de l'interpréteur
-    INTER_PCODE();
+    // INTER_PCODE();
 
     return 0; // Fin du programme
 }
