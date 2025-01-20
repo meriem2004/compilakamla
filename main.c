@@ -1,9 +1,9 @@
-#include "global.h"            // Définitions globales (constantes, types, etc.)
-#include "analyse_lexical.h"   // Fonctions d'analyse lexicale (LireCar, SymSuiv, etc.)
-#include "syntaxique.h"        // Fonctions d'analyse syntaxique (Program, etc.)
-#include "semantique.h"        // Fonctions d'analyse sémantique (ConstDecl, VarDecl, etc.)
-#include "generation_pcode.h"  // Fonctions pour générer le P-code (Ecrire1, Ecrire2, etc.)
-#include "interpreteur.h"      // Interpréteur de P-code (INTER_PCODE)
+#include "./headers/global.h"            // Définitions globales (constantes, types, etc.)
+#include "./headers/analyse_lexical.h"   // Fonctions d'analyse lexicale (LireCar, SymSuiv, etc.)
+#include "./headers/syntaxique.h"        // Fonctions d'analyse syntaxique (Program, etc.)
+#include "./headers/semantique.h"        // Fonctions d'analyse sémantique (ConstDecl, VarDecl, etc.)
+#include "./headers/generation_pcode.h"  // Fonctions pour générer le P-code (Ecrire1, Ecrire2, etc.)
+#include "./headers/interpreteur.h"      // Interpréteur de P-code (INTER_PCODE)
 
 int main(int argc, char* argv[])
 {

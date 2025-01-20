@@ -1,4 +1,4 @@
-#include "analyse_lexical.h"
+#include "./headers/analyse_lexical.h"
 
 // Token courant qui contient le type et la chaîne associée
 TSym_Cour symCour;       

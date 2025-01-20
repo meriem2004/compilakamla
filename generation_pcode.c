@@ -1,5 +1,5 @@
-#include "generation_pcode.h"
-#include "semantique.h"
+#include "./headers/generation_pcode.h"
+#include "./headers/semantique.h"
 
 // Tableau global de P-code qui va stocker toutes les instructions générées
 INSTRUCTION PCODE[TAILLECODE];

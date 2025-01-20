@@ -1,5 +1,5 @@
-#include "semantique.h"
-#include "analyse_lexical.h"
+#include "./headers/semantique.h"
+#include "./headers/analyse_lexical.h"
 
 // Tableau global pour stocker les entrées de la table des symboles
 T_IDF TAB_IDFS[TAILLEIDFS];
