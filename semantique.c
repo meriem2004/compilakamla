@@ -167,22 +167,22 @@ void TypeDecl()
         if (!strcmp(symCour.nom, "integer"))
         {
             d = TYPE_INT;
-            testSym(ID_TOKEN);
+            testSym(INT_TOKEN);
         }
         else if (!strcmp(symCour.nom, "real"))
         {
             d = TYPE_REAL;
-            testSym(ID_TOKEN);
+            testSym(REAL_TOKEN);
         }
         else if (!strcmp(symCour.nom, "boolean"))
         {
             d = TYPE_BOOL;
-            testSym(ID_TOKEN);
+            testSym(BOOL_TOKEN);
         }
         else if (!strcmp(symCour.nom, "string"))
         {
             d = TYPE_STRING;
-            testSym(ID_TOKEN);
+            testSym(STRING_TOKEN);
         }
         else
         {
