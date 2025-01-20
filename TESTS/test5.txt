@@ -1,0 +1,49 @@
+program Test5;
+const
+   c = 10;        
+type
+   myBool = boolean; 
+var
+   x, i : integer;
+   flag : myBool;
+   r : real;
+procedure ShowMessage(msg : integer);
+begin
+   write(msg);
+end;
+function DoubleValue(n : integer) : integer;
+begin
+   DoubleValue := n * 2;  
+end;
+
+{ Main Block }
+begin
+   x := c;               
+   r := 3.14;             
+   flag := true;
+
+   write('Enter a number: ');
+   read(i);              
+
+   if i < 0 then
+      write('Negative')
+   else
+      write('Non-negative');
+   ShowMessage( DoubleValue(i) );
+   for i := 1 to 3 do
+      write(i);
+   while i < 6 do
+   begin
+      i := i + 1;
+      write(i);
+   end;
+   repeat
+      x := x - 1;
+   until x = 0; 
+   case i of
+      5: write(' i is 5');
+      6: write(' i is 6');
+   else
+      write(' i is neither 5 nor 6');
+   end
+end.
