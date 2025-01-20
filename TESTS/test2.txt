@@ -1,9 +1,4 @@
-program test;
-const tata=12; titi=123;
-var x;
+program 9Test;  
 begin
-   titi:=tata;
-   write(z);
+   write(42)
 end.
-
-

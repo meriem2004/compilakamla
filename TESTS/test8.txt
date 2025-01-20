@@ -1,14 +1,9 @@
-program test;
-const tata=12;
-var x;
+program Test8;
+procedure P(a : integer);
 begin
-   x:=0;
-   while x<=tata do 
-	begin 
-	  write(x);
-	  x:=x+3;
-        end;
-   write(x);
+   write(a);
+end;
+
+begin
+   P(1, 2);  
 end.
-
-
