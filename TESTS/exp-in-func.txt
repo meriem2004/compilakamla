@@ -1,0 +1,13 @@
+program ExpressionInArgTest;
+var
+    result: integer;
+
+function Add(a: integer; b: integer): integer;
+begin
+    Add := a + b;
+end;
+
+begin
+    result := Add(3 + 2, 4 * 2);
+    write(result);
+end.

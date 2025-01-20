@@ -258,7 +258,59 @@ void testSym(TokenType t)
     }
     else {
         char buf[128];
-        sprintf(buf, "Unexpected token. Expected %d, found %d", t, symCour.cls);
+        sprintf(buf, "Unexpected token. Expected %s, found %s", clsToString(t), clsToString(symCour.cls));
         Error(buf);  // Affiche une erreur si le token ne correspond pas
+    }
+}
+
+const char* clsToString(int cls) {
+    switch (cls) {
+        case PROGRAM_TOKEN:    return "PROGRAM_TOKEN";
+        case VAR_TOKEN:        return "VAR_TOKEN";
+        case CONST_TOKEN:      return "CONST_TOKEN";
+        case TYPE_TOKEN:       return "TYPE_TOKEN";
+        case IF_TOKEN:         return "IF_TOKEN";
+        case THEN_TOKEN:       return "THEN_TOKEN";
+        case ELSE_TOKEN:       return "ELSE_TOKEN";
+        case WHILE_TOKEN:      return "WHILE_TOKEN";
+        case DO_TOKEN:         return "DO_TOKEN";
+        case REPEAT_TOKEN:     return "REPEAT_TOKEN";
+        case UNTIL_TOKEN:      return "UNTIL_TOKEN";
+        case FOR_TOKEN:        return "FOR_TOKEN";
+        case TO_TOKEN:         return "TO_TOKEN";
+        case DOWNTO_TOKEN:     return "DOWNTO_TOKEN";
+        case CASE_TOKEN:       return "CASE_TOKEN";
+        case OF_TOKEN:         return "OF_TOKEN";
+        case BEGIN_TOKEN:      return "BEGIN_TOKEN";
+        case END_TOKEN:        return "END_TOKEN";
+        case WRITE_TOKEN:      return "WRITE_TOKEN";
+        case READ_TOKEN:       return "READ_TOKEN";
+        case PROCEDURE_TOKEN:  return "PROCEDURE_TOKEN";
+        case FUNCTION_TOKEN:   return "FUNCTION_TOKEN";
+        case INT_TOKEN:        return "INT_TOKEN";
+        case REAL_TOKEN:       return "REAL_TOKEN";
+        case BOOL_TOKEN:       return "BOOL_TOKEN";
+        case STRING_TOKEN:     return "STRING_TOKEN";
+        case ID_TOKEN:         return "ID_TOKEN";
+        case PLUS_TOKEN:       return "PLUS_TOKEN";
+        case MOINS_TOKEN:      return "MOINS_TOKEN";
+        case MULTI_TOKEN:      return "MULTI_TOKEN";
+        case DIV_TOKEN:        return "DIV_TOKEN";
+        case PV_TOKEN:         return "PV_TOKEN";
+        case PT_TOKEN:         return "PT_TOKEN";
+        case PRG_TOKEN:        return "PRG_TOKEN";
+        case PRD_TOKEN:        return "PRD_TOKEN";
+        case EGAL_TOKEN:       return "EGAL_TOKEN";
+        case VIR_TOKEN:        return "VIR_TOKEN";
+        case INFEG_TOKEN:      return "INFEG_TOKEN";
+        case DIFF_TOKEN:       return "DIFF_TOKEN";
+        case INF_TOKEN:        return "INF_TOKEN";
+        case SUPEG_TOKEN:      return "SUPEG_TOKEN";
+        case SUP_TOKEN:        return "SUP_TOKEN";
+        case AFFECT_TOKEN:     return "AFFECT_TOKEN";
+        case COLON_TOKEN:      return "COLON_TOKEN";
+        case ERREUR_TOKEN:     return "ERREUR_TOKEN";
+        case DIEZE_TOKEN:      return "DIEZE_TOKEN";
+        default:               return "UNKNOWN_TOKEN";
     }
 }
