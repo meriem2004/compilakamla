@@ -2,7 +2,7 @@ program ProcedureNoParamTest;
 
 procedure PrintHello;
 begin
-    write("Hello");
+    write(1);
 end;
 
 begin

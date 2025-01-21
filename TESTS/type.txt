@@ -2,7 +2,7 @@ program TypeDefTest;
 type
     MyInt = integer;
 var
-    x: MyInt;
+    x: integer;
 begin
     x := 42;
     write(x);

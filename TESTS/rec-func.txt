@@ -1,13 +1,13 @@
 program RecursiveFunctionTest;
 var
-    result: integer;
+    result, n: integer;
 
 function Factorial(n: integer): integer;
 begin
     if n <= 1 then
         Factorial := 1
     else
-        Factorial := n * Factorial(n - 1);
+        Factorial := n * Factorial(n);
 end;
 
 begin

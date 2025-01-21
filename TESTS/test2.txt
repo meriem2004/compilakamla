@@ -1,4 +1,0 @@
-program 9Test;  
-begin
-   write(42)
-end.

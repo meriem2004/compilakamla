@@ -5,7 +5,7 @@ type
    myBool = boolean; 
 var
    x, i : integer;
-   flag : myBool;
+   flag : boolean;
    r : real;
 procedure ShowMessage(msg : integer);
 begin
@@ -16,20 +16,16 @@ begin
    DoubleValue := n * 2;  
 end;
 
-{ Main Block }
 begin
    x := c;               
    r := 3.14;             
-   flag := true;
-
-   write('Enter a number: ');
+   flag := 1;
    read(i);              
-
    if i < 0 then
-      write('Negative')
+      write(1)
    else
-      write('Non-negative');
-   ShowMessage( DoubleValue(i) );
+      write(2);
+   ShowMessage( x );
    for i := 1 to 3 do
       write(i);
    while i < 6 do
@@ -41,9 +37,9 @@ begin
       x := x - 1;
    until x = 0; 
    case i of
-      5: write(' i is 5');
-      6: write(' i is 6');
+      5: write(5);
+      6: write(6);
    else
-      write(' i is neither 5 nor 6');
+      write(7);
    end
 end.

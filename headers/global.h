@@ -99,6 +99,7 @@ typedef enum {
     BOOL_TOKEN,        // Mot-clé 'bool'
     STRING_TOKEN,      // Mot-clé 'string'
     DIEZE_TOKEN,       // Symbole '#' souvent utilisé pour marquer la fin
+    AST_TOKEN,         //astrix       
     ERREUR_TOKEN       // Token indiquant une erreur
 } TokenType; // Définit le type de chaque token dans le lexeur
 

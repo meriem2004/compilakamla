@@ -6,7 +6,6 @@ function GetFive: integer;
 begin
     GetFive := 5;
 end;
-
 begin
     result := GetFive;
     write(result);

@@ -5,5 +5,5 @@ begin
 end;
 
 begin
-   P(1, 2);  
+   P(1);  
 end.

@@ -253,6 +253,48 @@ void Inst()
     }
     break;
 
+    // case WRITE_TOKEN:
+    // {
+    //     // WRITE_INST ::= write ( EXPR | STRING_LITERAL { , EXPR | STRING_LITERAL } )
+    //     testSym(WRITE_TOKEN); // Consume "write"
+    //     testSym(PRG_TOKEN);   // Consume '('
+    //     do
+    //     {
+    //         if (symCour.cls == AST_TOKEN) {
+    //             // Handle string literals
+    //             testSym(AST_TOKEN); // Consume the opening single quote or asterisk
+
+    //             // Read characters until the next AST_TOKEN is found
+    //             char str[128]; // Buffer to store the string literal
+    //             int i = 0;
+    //             while (symCour.cls != AST_TOKEN && i < sizeof(str) - 1) {
+    //                 str[i++] = car_cour; // Store the current character
+    //                 LireCar();           // Read the next character
+    //                 SymSuiv();           // Update the current token
+    //             }
+
+    //             str[i] = '\0'; // Null-terminate the string
+    //             testSym(AST_TOKEN); // Consume the closing single quote or asterisk
+
+    //             // Generate P-code to print the string literal
+    //             Ecrire2(LDI, (int)str); // Load the address of the string (as an integer for simplicity)
+    //             Ecrire1(PRN);           // Print the string
+    //         } else {
+    //             // Handle expressions (variables, constants, etc.)
+    //             Exp();                  // EXPR ::= TERM { ( + | - ) TERM }
+    //             Ecrire1(PRN);           // Generate the print instruction
+    //         }
+
+    //         if (symCour.cls == VIR_TOKEN) {
+    //             testSym(VIR_TOKEN); // Consume the comma if there are more arguments
+    //         } else {
+    //             break; // Exit the loop if no more arguments
+    //         }
+    //     } while (1);
+    //     testSym(PRD_TOKEN); // Consume ')'
+    // }
+    // break;
+
     case READ_TOKEN:
     {
         // READ_INST ::= read ( ID { , ID } )

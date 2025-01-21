@@ -34,6 +34,41 @@ void Ecrire2(Mnemoniques M, int arg) {
     PCODE[PC].SUITE = arg;  // Stocke l'argument associé à l'instruction
 }
 
+//Afficher p code en tant que string
+
+// Function to convert Mnemoniques enum to string
+const char* mnemoniqueToString(Mnemoniques mnemonic) {
+    switch (mnemonic) {
+        case ADD: return "ADD";
+        case SUB: return "SUB";
+        case MUL: return "MUL";
+        case DIVI: return "DIVI";
+        case EQL: return "EQL";
+        case NEQ: return "NEQ";
+        case GTR: return "GTR";
+        case LSS: return "LSS";
+        case GEQ: return "GEQ";
+        case LEQ: return "LEQ";
+        case PRN: return "PRN";
+        case INN: return "INN";
+        case LDI: return "LDI";
+        case LDA: return "LDA";
+        case LDV: return "LDV";
+        case STO: return "STO";
+        case BRN: return "BRN";
+        case BZE: return "BZE";
+        case HLT: return "HLT";
+        case CALL: return "CALL";
+        case RET: return "RET";
+        case LDL: return "LDL";
+        case STL: return "STL";
+        case LDF: return "LDF";
+        case STO_IND: return "STO_IND";
+        case PUSH_PARAMS_COUNT: return "PUSH_PARAMS_COUNT";
+        default: return "UNKNOWN";
+    }
+}
+
 // ---------------------------------------------------------------------
 // afficherPCode : Affiche toutes les instructions du P-code
 // ---------------------------------------------------------------------
@@ -41,7 +76,7 @@ void Ecrire2(Mnemoniques M, int arg) {
 // le mnémonique et l'argument
 void afficherPCode() {
     for (int i = 0; i <= PC; i++) {
-        printf("%3d : (%d, %d)\n", i, PCODE[i].MNE, PCODE[i].SUITE);
+        printf("%3d : (%s, %d)\n", i, mnemoniqueToString(PCODE[i].MNE), PCODE[i].SUITE);
     }
 }
 

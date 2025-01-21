@@ -1,6 +1,6 @@
 program Test6;
 const
-   myConst = (3.14; 
+   myConst = 3.14; 
 begin
    write(myConst)
 end.

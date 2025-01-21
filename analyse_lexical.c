@@ -239,6 +239,12 @@ void SymSuiv()
                 strcpy(symCour.nom, ":");
             }
             break;
+        case '\'':
+            symCour.cls = AST_TOKEN;
+            symCour.nom[0] = '\'';
+            symCour.nom[1] = '\0';
+            LireCar();
+            break;
         default:
             // Si aucun cas ne correspond, c'est un caractère inconnu
             symCour.cls = ERREUR_TOKEN;

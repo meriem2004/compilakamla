@@ -4,7 +4,7 @@ var
 begin
     x := 10;
     if x > 5 then
-        write("x is greater than 5")
+        write(10)
     else
-        write("x is less than or equal to 5");
+        write(1);
 end.
